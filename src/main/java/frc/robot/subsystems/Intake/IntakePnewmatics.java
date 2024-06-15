@@ -4,29 +4,52 @@
 
 package frc.robot.subsystems.Intake;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IntakePnewmatics extends Command {
+public class IntakePnewmatics extends SubsystemBase {
+  static final DoubleSolenoid leftDoubleSolenoid 
+    = new DoubleSolenoid(
+      PneumaticsModuleType.REVPH,
+      IntakeConst.LeftIntakeSOlChannle1, 
+      IntakeConst.LeftIntakeSOlChannle2);
+
+  static final DoubleSolenoid rightDoubleSolenoid 
+    = new DoubleSolenoid(
+      PneumaticsModuleType.REVPH,
+      IntakeConst.RightIntakeSOlChannle1, 
+      IntakeConst.RightIntakeSOlChannle2);
+
+  boolean Forward;
+
   /** Creates a new IntakePnewmatics. */
   public IntakePnewmatics() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
+  public void Switch(){
+    if (Forward) {
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+      leftDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+      rightDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+      Forward = false;
+    }else{
+
+      leftDoubleSolenoid.set(DoubleSolenoid.Value.kForward);
+      rightDoubleSolenoid.set(DoubleSolenoid.Value.kForward);
+
+      Forward = true;
+    }
+  }
+
+  public boolean forward(){
+    return Forward;
   }
 }
