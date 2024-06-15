@@ -4,29 +4,26 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import org.opencv.core.Mat;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.Drive.drive;
 
-public class driveCommand extends Command {
-  /** Creates a new driveCommand. */
-  public driveCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+public class driveCommand{
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+  private static final double DEADBAND = 0.1;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
+  public static Command driveCommands(DoubleSupplier y, DoubleSupplier omega, drive Drive){
+    return Commands.run(
+      () -> {
+        double ProsY = Math.pow( MathUtil.applyDeadband(y.getAsDouble(), DEADBAND), 2);
+        double ProOmega = Math.pow( MathUtil.applyDeadband(omega.getAsDouble(), DEADBAND), 3);
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+        Drive.DiffDrive(ProsY, ProOmega);
+      }, Drive);
   }
 }

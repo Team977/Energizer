@@ -4,12 +4,29 @@
 
 package frc.robot.commands;
 
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Shooter.Shooter;
 
 public class SpinupShooterMotor extends Command {
+
+  DoubleSupplier rotationsPerSec;
+  Shooter shooter;
+
+  PIDController pid = new PIDController(0.01, 0, 0);
+
   /** Creates a new SpinupShooterMotor. */
-  public SpinupShooterMotor() {
+  public SpinupShooterMotor(DoubleSupplier rotationsPerSecound, Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+
+    rotationsPerSec = rotationsPerSecound;
+    this.shooter = shooter;
+
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -18,7 +35,12 @@ public class SpinupShooterMotor extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+    shooter.setSpeed(pid.calculate(shooter.getVelocity().in(RotationsPerSecond)
+      , rotationsPerSec.getAsDouble()));
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override

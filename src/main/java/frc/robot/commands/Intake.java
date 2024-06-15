@@ -4,21 +4,54 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Intake.IntakePnewmatics;
+import frc.robot.subsystems.Intake.IntakeWheals;
 
 public class Intake extends Command {
+
+
+  private final double IntakeSpeed;
+  private final double inSec, OutSec;
+
+  private final IntakePnewmatics PNEWMATICS;
+  private final IntakeWheals INTAKE_WHEALS;
+
+  private Timer timer;
   /** Creates a new Intake. */
-  public Intake() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public Intake(double InSec, double OutSec, double IntakeSpeed, IntakePnewmatics pnewmatics, IntakeWheals intakeWheals) {
+  
+    this.INTAKE_WHEALS = intakeWheals;
+    PNEWMATICS = pnewmatics;
+    this.IntakeSpeed = IntakeSpeed;
+    this.inSec = InSec;
+    this.OutSec = OutSec;
+
+    addRequirements(PNEWMATICS, INTAKE_WHEALS);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+    INTAKE_WHEALS.runMotor(IntakeSpeed);
+
+    if(PNEWMATICS.forward() && timer.advanceIfElapsed(OutSec)){
+      timer.reset();
+      PNEWMATICS.Switch();
+    }else if(!PNEWMATICS.forward() && timer.advanceIfElapsed(inSec)){
+      timer.reset();
+      PNEWMATICS.Switch();
+    }
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override

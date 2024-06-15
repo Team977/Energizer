@@ -4,11 +4,29 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Shooter.Aim;
 
 public class setAimPosition extends Command {
+
+  DoubleSupplier aimPos;
+  Aim aim;
+
+  ProfiledPIDController aimController
+    = new ProfiledPIDController(0.01, 0, 0,
+        new TrapezoidProfile.Constraints(1, 1));
+
   /** Creates a new setAimPosition. */
-  public setAimPosition() {
+  public setAimPosition(DoubleSupplier aimPos, Aim aim) {
+
+    this.aimPos = aimPos;
+    this.aim = aim;
+
+    addRequirements(aim);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -18,7 +36,11 @@ public class setAimPosition extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+    aim.setSpeed(aimController.calculate(aim.getRotation().getDegrees(), aimPos.getAsDouble()));
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override

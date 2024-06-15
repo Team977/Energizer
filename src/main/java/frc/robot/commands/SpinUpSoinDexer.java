@@ -4,12 +4,25 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.SpinDexer.Spindexer;
 
 public class SpinUpSoinDexer extends Command {
+
+  DoubleSupplier speed;
+  Spindexer spindexer;
+  PIDController pid = new PIDController(0.01, 0, 0);
+
   /** Creates a new SpinUpSoinDexer. */
-  public SpinUpSoinDexer() {
+  public SpinUpSoinDexer(DoubleSupplier speed,Spindexer spindexer) {
     // Use addRequirements() here to declare subsystem dependencies.
+
+    this.speed = speed;
+    this.spindexer = spindexer;
+    addRequirements(spindexer);
   }
 
   // Called when the command is initially scheduled.
@@ -18,7 +31,9 @@ public class SpinUpSoinDexer extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    spindexer.setSpeed(pid.calculate(spindexer.getSpeed(), speed.getAsDouble()));
+  }
 
   // Called once the command ends or is interrupted.
   @Override

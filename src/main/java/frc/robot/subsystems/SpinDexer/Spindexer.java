@@ -10,6 +10,14 @@ public class Spindexer extends SubsystemBase {
   /** Creates a new Spindexer. */
   public Spindexer() {}
 
+public void setSpeed(double speed){
+
+}
+
+public double getSpeed(){
+  return 0;
+}
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

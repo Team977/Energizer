@@ -4,9 +4,21 @@
 
 package frc.robot.commands;
 
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Rotations;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Shooter.Aim;
 
 public class getAimOffset extends Command {
+
+  Aim aim;
+
+  double peekCurrent;
+  double speed;
+  double peekCurrentAimOffset;
+
   /** Creates a new getAimOffset. */
   public getAimOffset() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,6 +39,16 @@ public class getAimOffset extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
+    if(aim.getCurrent() > peekCurrent){
+      aim.setSpeed(0);
+      aim.setRotationOffset(
+        new Rotation2d(Degrees.of(peekCurrentAimOffset - aim.getRawRotation().getDegrees()))
+      );
+
+      return true;
+    }
+
     return false;
   }
 }
