@@ -4,8 +4,10 @@ import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.Odometry;
+import edu.wpi.first.math.proto.Kinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
@@ -26,8 +28,7 @@ public class DriveConSim implements DriveConMoudle{
 
     Rotation2d angle = new Rotation2d(0);
 
-    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(angle, 0, 0);
-  
+    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(0), 0, 0);
   DriveConSim(){
         leftEncoderSim.setDistancePerPulse(Math.PI * driveCons.kWhealDiameter / 1000);
         rightEncoderSim.setDistancePerPulse(Math.PI * driveCons.kWhealDiameter / 1000);
@@ -42,6 +43,7 @@ public class DriveConSim implements DriveConMoudle{
     public void setLeftPower(double speed){
         leftDriveMotor.setInputVoltage(speed * RobotController.getInputVoltage());
         leftEncoderSim.setDistance(leftDriveMotor.getAngularPositionRotations());
+        odometry.update(new Rotation2d(0), leftEncoderSim.getDistance(), rightEncoderSim.getDistance());
         //leftDriveMotor.set(speed);
     }
 
@@ -49,6 +51,7 @@ public class DriveConSim implements DriveConMoudle{
     public void setRightPower(double speed){
         rightDriveMotor.setInputVoltage(speed * RobotController.getInputVoltage());
         rightEncoderSim.setDistance(rightDriveMotor.getAngularPositionRotations());
+        odometry.update(new Rotation2d(0), leftEncoderSim.getDistance(), rightEncoderSim.getDistance());
         //RightDriveMotor.set(speed);
     }
 
