@@ -6,33 +6,49 @@ package frc.robot.subsystems.Drive;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.hal.SimDouble;
+import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
+import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.MotorConst;
 import edu.wpi.first.units.*;
 
 public class drive extends SubsystemBase {
-
-  PWMVictorSPX leftDriveMotor = new PWMVictorSPX(MotorConst.driveLeftChannle);
-  PWMVictorSPX RightDriveMotor = new PWMVictorSPX(MotorConst.driveRightChannle);
-
+  DriveConMoudle driveCon;
+  
   DifferentialDrive differentialDrive;
-
-  AHRS gyro = new AHRS(SPI.Port.kMXP);
 
   /** Creates a new drive. */
   public drive() {
+
+    switch (Robot.Status) {
+      case Real:
+        driveCon = new DriveConReal();
+        break;
+      case Sim:
+        break;
+      default:
+        break;
+      
+    }
+
     differentialDrive = new DifferentialDrive(
       (LeftPower) -> {
-        leftDriveMotor.set(LeftPower);
+        driveCon.setLeftPower(LeftPower);
       }, 
       (RightPower) -> {
-        leftDriveMotor.set(RightPower);
+        driveCon.setRightPower(RightPower);
       });
 
   }
@@ -47,10 +63,10 @@ public class drive extends SubsystemBase {
   }
 
   public Rotation2d getYaw(){
-    return new Rotation2d(Units.Degrees.of(gyro.getAngle()));
+    return new Rotation2d(Units.Degrees.of(driveCon.getRotation().getDegrees()));
   }
 
   public double getYawDeg(){
-    return gyro.getAngle();
+    return driveCon.getRotation().getDegrees();
   }
 }
