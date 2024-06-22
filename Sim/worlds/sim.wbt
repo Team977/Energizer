@@ -1,0 +1,57 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.022426164467690073 -0.01881268643095893 -0.9995714831749246 1.7356285648807994
+  position 0.19254693752660132 0.47252868774903645 0.06227162161923245
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Solid {
+  translation 0.13 0 -6.10067e-07
+  rotation 0 -1 0 -5.307179586466759e-06
+  children [
+    Solid {
+      rotation 0 1 0 4.692820414042842e-06
+      children [
+        Solid {
+          rotation 0 1 0 -0.261795307179586
+          children [
+            Solid {
+              rotation 0 1 0 1.8326
+              children [
+                CadShape {
+                  url [
+                    "../protos/Shooter Wheals.obj"
+                  ]
+                }
+              ]
+              name "solid(1)"
+            }
+            CadShape {
+              url [
+                "../protos/Shooter Assm Static.obj"
+              ]
+            }
+            Solid {
+              rotation 0 1 0 1.0472
+              children [
+                CadShape {
+                  url [
+                    "../protos/Shooter Hood.obj"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
