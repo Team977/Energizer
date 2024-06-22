@@ -1,6 +1,7 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2024.3.2"
+    id "org.team199.deepbluesim" version "0.0.15"
 }
 
 java {
