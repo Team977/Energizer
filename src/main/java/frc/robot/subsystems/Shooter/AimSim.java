@@ -6,10 +6,12 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.subsystems.MotorConst;
 
+
 public class AimSim {
     
     static final CANSparkMax AimMotor = new CANSparkMax(MotorConst.AimMotorCANId, MotorType.kBrushless);
     static final RelativeEncoder ENCODER = AimMotor.getEncoder();
+
     /** Creates a new Aim. */
     public AimSim() {}
   

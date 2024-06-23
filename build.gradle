@@ -1,6 +1,7 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2024.3.2"
+    id 'jvm-test-suite'
+    id "edu.wpi.first.GradleRIO" version "2024.3.1"
     id "org.team199.deepbluesim" version "0.0.15"
 }
 
@@ -12,7 +13,7 @@ java {
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
-// This is added by GradleRIO's backing project DeployUtils.
+// This is added by GradleRIO's backing project EmbeddedTools.
 deploy {
     targets {
         roborio(getTargetTypeClass('RoboRIO')) {
@@ -40,6 +41,10 @@ deploy {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 
 // Set to true to use debug for JNI.
@@ -49,7 +54,7 @@ wpi.java.debugJni = false
 def includeDesktopSupport = true
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
-// Also defines JUnit 5.
+// Also defines JUnit 4.
 dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
@@ -69,7 +74,6 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
@@ -77,9 +81,11 @@ test {
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
 }
 
-// Simulation configuration (e.g. environment variables).
-wpi.sim.addGui().defaultEnabled = true
-wpi.sim.addDriverstation()
+// Must check the box in vscode to enable support upon debugging
+if (System.getenv()['CI'] == null) {
+    wpi.sim.addGui().defaultEnabled = true
+    wpi.sim.addDriverstation()
+}
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
 // in order to make them all available at runtime. Also adding the manifest so WPILib
@@ -99,4 +105,44 @@ wpi.java.configureTestTasks(test)
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
+}
+
+def ws_server = wpi.sim.addWebsocketsServer()
+
+testing {
+    suites {
+        configureEach {
+            useJUnitJupiter()
+
+            targets {
+                all {
+                    testTask.configure {
+                        systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+                    }
+                }
+            }
+        }
+
+        systemTest(JvmTestSuite)  {
+            dependencies {
+                implementation project()
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+    }
+}
+
+wpi.java.configureTestTasks(systemTest)
+//deepbluesim.configureForSimulation(systemTest, [ws_server])
+assemble.dependsOn installDeepBlueSim
+
+tasks.named('check') {
+    dependsOn(testing.suites.systemTest)
 }
