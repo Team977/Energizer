@@ -4,10 +4,12 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake.IntakePnewmatics;
-import frc.robot.subsystems.Intake.IntakeWheals;
+import frc.robot.subsystems.Intake.IntakePnewmatics.IntakePnewmatics;
+import frc.robot.subsystems.Intake.IntakeWheal.IntakeWheals;
 
 public class Intake extends Command {
 
@@ -18,7 +20,8 @@ public class Intake extends Command {
   private final IntakePnewmatics PNEWMATICS;
   private final IntakeWheals INTAKE_WHEALS;
 
-  private Timer timer;
+  private Timer timer = new Timer();
+
   /** Creates a new Intake. */
   public Intake(double InSec, double OutSec, double IntakeSpeed, IntakePnewmatics pnewmatics, IntakeWheals intakeWheals) {
   
@@ -50,6 +53,8 @@ public class Intake extends Command {
       timer.reset();
       PNEWMATICS.Switch();
     }
+
+    SmartDashboard.putBoolean("Phewmatics Forward", PNEWMATICS.forward());
 
   }
 

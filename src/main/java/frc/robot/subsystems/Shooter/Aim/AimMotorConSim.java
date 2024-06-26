@@ -45,7 +45,7 @@ public class AimMotorConSim implements AimMotorConMoudle {
     }
 
     public void setSpeed(double speed){
-        AimMotor.setInputVoltage(speed * RobotController.getInputVoltage());;
+        AimMotor.setInputVoltage(speed * RobotController.getInputVoltage());
         AimMotor.update(0.02);
     }
     

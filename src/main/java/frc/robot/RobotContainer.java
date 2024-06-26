@@ -5,10 +5,13 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Intake;
 import frc.robot.commands.SpinupShooterMotor;
 import frc.robot.commands.driveCommand;
 import frc.robot.commands.setAimPosition;
 import frc.robot.subsystems.Drive.drive;
+import frc.robot.subsystems.Intake.IntakePnewmatics.IntakePnewmatics;
+import frc.robot.subsystems.Intake.IntakeWheal.IntakeWheals;
 import frc.robot.subsystems.Shooter.Aim.Aim;
 import frc.robot.subsystems.Shooter.Shooter.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
@@ -34,6 +37,8 @@ public class RobotContainer {
 
   private final Aim aim = new Aim();
   private final Shooter shooter = new Shooter();
+  private final IntakeWheals intakeWheals = new IntakeWheals();
+  private final IntakePnewmatics intakePnewmatics = new IntakePnewmatics();
 
   //private final drive drive = new drive();
 
@@ -58,6 +63,7 @@ public class RobotContainer {
 
     aim.setDefaultCommand(new setAimPosition(() -> SmartDashboard.getNumber("set Target Position", 0), aim));
     shooter.setDefaultCommand(new SpinupShooterMotor(() -> SmartDashboard.getNumber("set RPS", 0), shooter));
+    intakeWheals.setDefaultCommand(new Intake(0.5, 0.5, 0.5, intakePnewmatics, intakeWheals));
 
     //drive.setDefaultCommand
     //  (driveCommand.driveCommands(() -> joystickSim.getRawAxis(1), 

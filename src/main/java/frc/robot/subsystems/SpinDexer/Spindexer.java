@@ -4,9 +4,11 @@
 
 package frc.robot.subsystems.SpinDexer;
 
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Spindexer extends SubsystemBase {
+
   /** Creates a new Spindexer. */
   public Spindexer() {}
 
