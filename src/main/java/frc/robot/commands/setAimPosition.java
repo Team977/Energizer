@@ -6,10 +6,11 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter.Aim;
+import frc.robot.subsystems.Shooter.Aim.Aim;
 
 public class setAimPosition extends Command {
 
@@ -17,9 +18,11 @@ public class setAimPosition extends Command {
   Aim aim;
 
   ProfiledPIDController aimController
-    = new ProfiledPIDController(0.01, 0, 0,
-        new TrapezoidProfile.Constraints(1, 1));
+    = new ProfiledPIDController(0.025, 0, 0,
+        new TrapezoidProfile.Constraints(1, 0.2));
 
+
+  //PIDController aimController = new PIDController(0.00004, 0, 0);
   /** Creates a new setAimPosition. */
   public setAimPosition(DoubleSupplier aimPos, Aim aim) {
 

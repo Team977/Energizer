@@ -1,7 +1,27 @@
 {
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/pose": "Field2d"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "Shuffleboard": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "double[]##v_/SmartDashboard/pos": {
+          "open": true
+        },
+        "open": true,
+        "pose": {
+          "double[]##v_/SmartDashboard/pose/Robot": {
+            "open": true
+          },
+          "open": true
+        }
+      }
     }
   },
   "NetworkTables Info": {

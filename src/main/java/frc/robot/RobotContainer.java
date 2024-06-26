@@ -5,6 +5,15 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.SpinupShooterMotor;
+import frc.robot.commands.driveCommand;
+import frc.robot.commands.setAimPosition;
+import frc.robot.subsystems.Drive.drive;
+import frc.robot.subsystems.Shooter.Aim.Aim;
+import frc.robot.subsystems.Shooter.Shooter.Shooter;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.simulation.JoystickSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -18,12 +27,21 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  //private final CommandXboxController m_driverController =
+  //    new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
+  private final Joystick joystickSim = new Joystick(0);
+
+  private final Aim aim = new Aim();
+  private final Shooter shooter = new Shooter();
+
+  //private final drive drive = new drive();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    SmartDashboard.putNumber("set Target Position", 0);
+    SmartDashboard.putNumber("set RPS", 0);
     configureBindings();
   }
 
@@ -37,6 +55,14 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
+    aim.setDefaultCommand(new setAimPosition(() -> SmartDashboard.getNumber("set Target Position", 0), aim));
+    shooter.setDefaultCommand(new SpinupShooterMotor(() -> SmartDashboard.getNumber("set RPS", 0), shooter));
+
+    //drive.setDefaultCommand
+    //  (driveCommand.driveCommands(() -> joystickSim.getRawAxis(1), 
+    //   () -> joystickSim.getRawAxis(0), drive));
+
   }
 
   /**

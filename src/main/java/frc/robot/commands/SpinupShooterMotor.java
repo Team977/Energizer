@@ -10,14 +10,14 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Shooter.Shooter.Shooter;
 
 public class SpinupShooterMotor extends Command {
 
   DoubleSupplier rotationsPerSec;
   Shooter shooter;
 
-  PIDController pid = new PIDController(0.01, 0, 0);
+  PIDController pid = new PIDController(40, 0, 0.1);
 
   /** Creates a new SpinupShooterMotor. */
   public SpinupShooterMotor(DoubleSupplier rotationsPerSecound, Shooter shooter) {

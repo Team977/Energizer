@@ -9,7 +9,7 @@ import static edu.wpi.first.units.Units.Rotations;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter.Aim;
+import frc.robot.subsystems.Shooter.Aim.Aim;
 
 public class getAimOffset extends Command {
 
