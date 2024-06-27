@@ -1,12 +1,7 @@
 package frc.robot.subsystems.Shooter.Aim;
 
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -17,8 +12,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
-import frc.robot.subsystems.MotorConst;
-import frc.robot.subsystems.Shooter.Aim.AimMotorConMoudle;
 
 public class AimMotorConSim implements AimMotorConMoudle {
     

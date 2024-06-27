@@ -13,7 +13,6 @@ import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Velocity;
 import frc.robot.subsystems.MotorConst;
-import frc.robot.subsystems.Shooter.Aim.AimMotorConMoudle;
 
 public class AimMotorConReal implements AimMotorConMoudle {
     

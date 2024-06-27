@@ -12,13 +12,13 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.Drive.drive;
+import frc.robot.subsystems.Drive.Drive;
 
 public class driveCommand{
 
   private static final double DEADBAND = 0.1;
 
-  public static Command driveCommands(DoubleSupplier y, DoubleSupplier omega, drive Drive){
+  public static Command driveCommands(DoubleSupplier y, DoubleSupplier omega, Drive Drive){
     return Commands.run(
       () -> {
         double ProsY = Math.pow( MathUtil.applyDeadband(y.getAsDouble(), DEADBAND), 2);

@@ -38,6 +38,7 @@ public class Intake extends Command {
   @Override
   public void initialize() {
     timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -54,7 +55,6 @@ public class Intake extends Command {
       PNEWMATICS.Switch();
     }
 
-    SmartDashboard.putBoolean("Phewmatics Forward", PNEWMATICS.forward());
 
   }
 

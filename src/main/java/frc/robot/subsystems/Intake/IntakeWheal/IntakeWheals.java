@@ -3,11 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems.Intake.IntakeWheal;
-
-import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Intake.IntakeConst;
 
 public class IntakeWheals extends SubsystemBase {
 
@@ -18,7 +14,7 @@ public class IntakeWheals extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //SmartDashboard.putNumber("Intake Vel", whealsCon.getVelcocity());
+    //SmartDashboard.putNumber("Intake Wheale Vel SIM", whealsCon.getVelcocity());
     // This method will be called once per scheduler run
   }
 

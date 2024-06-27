@@ -9,7 +9,7 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.SpinupShooterMotor;
 import frc.robot.commands.driveCommand;
 import frc.robot.commands.setAimPosition;
-import frc.robot.subsystems.Drive.drive;
+import frc.robot.subsystems.Drive.Drive;
 import frc.robot.subsystems.Intake.IntakePnewmatics.IntakePnewmatics;
 import frc.robot.subsystems.Intake.IntakeWheal.IntakeWheals;
 import frc.robot.subsystems.Shooter.Aim.Aim;
@@ -39,14 +39,15 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final IntakeWheals intakeWheals = new IntakeWheals();
   private final IntakePnewmatics intakePnewmatics = new IntakePnewmatics();
+  private final Drive drive = new Drive();
 
   //private final drive drive = new drive();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    SmartDashboard.putNumber("set Target Position", 0);
-    SmartDashboard.putNumber("set RPS", 0);
+    SmartDashboard.putNumber("set Aim Target Position", 20);
+    SmartDashboard.putNumber("set Shooter RPS", 50);
     configureBindings();
   }
 
@@ -61,10 +62,10 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    aim.setDefaultCommand(new setAimPosition(() -> SmartDashboard.getNumber("set Target Position", 0), aim));
-    shooter.setDefaultCommand(new SpinupShooterMotor(() -> SmartDashboard.getNumber("set RPS", 0), shooter));
+    aim.setDefaultCommand(new setAimPosition(() -> SmartDashboard.getNumber("set Aim Target Position", 0), aim));
+    shooter.setDefaultCommand(new SpinupShooterMotor(() -> SmartDashboard.getNumber("set Shooter RPS", 0), shooter));
     intakeWheals.setDefaultCommand(new Intake(0.5, 0.5, 0.5, intakePnewmatics, intakeWheals));
-
+    drive.setDefaultCommand( driveCommand.driveCommands(() -> joystickSim.getRawAxis(1), () -> joystickSim.getRawAxis(0), drive));
     //drive.setDefaultCommand
     //  (driveCommand.driveCommands(() -> joystickSim.getRawAxis(1), 
     //   () -> joystickSim.getRawAxis(0), drive));

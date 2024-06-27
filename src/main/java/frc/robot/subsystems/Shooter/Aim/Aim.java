@@ -3,19 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems.Shooter.Aim;
-import static edu.wpi.first.units.Units.*;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.MotorConst;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.Unit;
 import edu.wpi.first.units.Velocity;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -32,7 +24,7 @@ public class Aim extends SubsystemBase {
   }
 
   public void setSpeed(double speed){
-    SmartDashboard.putNumber("Desired Speed", speed);
+    //SmartDashboard.putNumber("Aim Motor Desired Speed", speed);
     aimMotorConMoudle.setSpeed(speed);
   }
 
@@ -67,8 +59,8 @@ public class Aim extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Rotation", getRotation().getDegrees());
-    SmartDashboard.putNumber("Velocity", getVelocity().in(DegreesPerSecond));
+    SmartDashboard.putNumber("Aimer Rotation", getRotation().getDegrees());
+    //SmartDashboard.putNumber("Aim Motor Velocity", getVelocity().in(DegreesPerSecond));
     // This method will be called once per scheduler run
   }
 }

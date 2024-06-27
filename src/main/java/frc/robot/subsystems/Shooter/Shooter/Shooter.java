@@ -27,7 +27,7 @@ public class Shooter extends SubsystemBase {
 
 
   public void setSpeed(double speed){
-    SmartDashboard.putNumber("Target Speed", speed);
+    //SmartDashboard.putNumber("Target Speed", speed);
     shooterCon.setSpeed(speed);
   }
 
@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Current RPS", getVelocity().in(RotationsPerSecond));
+    SmartDashboard.putNumber("Current Shooter RPS", getVelocity().in(RotationsPerSecond));
     // This method will be called once per scheduler run
   }
 }

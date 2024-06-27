@@ -4,11 +4,8 @@
 
 package frc.robot.subsystems.Intake.IntakePnewmatics;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Intake.IntakeConst;
-import frc.robot.subsystems.Intake.IntakeWheal.IntakeWhealsConSim;
 
 public class IntakePnewmatics extends SubsystemBase {
   static final IntakePnewmaticsConMoudlue INTAKE_PNEWMATICS_CON = new IntakePnewmaticsConSIm();
@@ -21,6 +18,7 @@ public class IntakePnewmatics extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Phewmatics Position(1 fully out, 0 in)", forward() ? 1 : 0);
     // This method will be called once per scheduler run
   }
 
